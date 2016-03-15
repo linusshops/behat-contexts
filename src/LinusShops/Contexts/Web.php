@@ -133,6 +133,31 @@ class Web extends MinkContext
         });
     }
 
+    public function getElementByCssSelector($cssSelector)
+    {
+        $element = $this->getSession()
+            ->getPage()
+            ->find("css", $cssSelector);
+
+        $this->assert($element != null, "{$cssSelector} not found on the page");
+
+        return $element;
+    }
+
+    public function click($cssSelector)
+    {
+        $element = $this->getElementByCssSelector($cssSelector);
+
+        $element->click();
+    }
+
+    public function doubleclick($cssSelector)
+    {
+        $element = $this->getElementByCssSelector($cssSelector);
+
+        $element->doubleClick();
+    }
+
     public function clickFirstVisibleElementOfType($selectorString)
     {
         $page = $this->getSession()->getPage();
@@ -188,16 +213,5 @@ class Web extends MinkContext
     public function assertIsVisible($cssSelector)
     {
         $this->assert($this->isVisible($cssSelector), $cssSelector.' is not visible on page');
-    }
-
-    public function clickElement($cssSelector)
-    {
-        $element = $this->getSession()
-            ->getPage()
-            ->find("css", $cssSelector);
-
-        $this->assert($element != null, "{$cssSelector} not found on the page");
-
-        $element->click();
     }
 }
