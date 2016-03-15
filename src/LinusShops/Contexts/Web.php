@@ -289,4 +289,15 @@ class Web extends MinkContext
     {
         $this->assert($this->isVisible($cssSelector), $cssSelector.' is not visible on page');
     }
+
+    /**
+     * Assert the given selector is NOT visible on the page.
+     *
+     * @param string $cssSelector
+     * @throws ExpectationException
+     */
+    public function assertIsNotVisible($cssSelector)
+    {
+        $this->assert(!$this->isVisible($cssSelector), $cssSelector.' is visible on page');
+    }
 }

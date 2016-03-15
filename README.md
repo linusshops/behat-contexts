@@ -5,6 +5,8 @@ framework.
 
 ## Features
 
+### Assertions
+
 ### Screenshots
 
 ### Examples

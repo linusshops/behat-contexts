@@ -65,10 +65,81 @@ trait Generic
      * @param string $failureMessage
      * @throws \Exception
      */
-    public function assert($condition, $failureMessage)
+    public function assert($condition, $failureMessage = '')
     {
         if (!$condition) {
             throw new \Exception($failureMessage);
         }
+    }
+
+    /**
+     * @param $expected
+     * @param $actual
+     * @param null $msg
+     * @throws \Exception
+     */
+    public function assertEqual($expected, $actual, $msg = null)
+    {
+        $this->assert(
+            $expected == $actual,
+            $msg == null ? "Expected {$expected} to equal {$actual}" : $msg
+        );
+    }
+
+    /**
+     * @param $expected
+     * @param $actual
+     * @param null $msg
+     * @throws \Exception
+     */
+    public function assertExactlyEqual($expected, $actual, $msg = null)
+    {
+        $this->assert(
+            $expected === $actual,
+            $msg == null ? "Expected {$expected} to exactly equal {$actual}" : $msg
+        );
+    }
+
+    /**
+     * @param $expected
+     * @param $actual
+     * @param null $msg
+     * @throws \Exception
+     */
+    public function assertLessThan($expected, $actual, $msg = null)
+    {
+        $this->assert(
+            $expected < $actual,
+            $msg == null ? "Expected {$expected} to be less than {$actual}" : $msg
+        );
+    }
+
+    /**
+     * @param $expected
+     * @param $actual
+     * @param null $msg
+     * @throws \Exception
+     */
+    public function assertGreaterThan($expected, $actual, $msg = null)
+    {
+        $this->assert(
+            $expected > $actual,
+            $msg == null ? "Expected {$expected} to be greater than {$actual}" : $msg
+        );
+    }
+
+    /**
+     * @param $expected
+     * @param $actual
+     * @param int $range
+     * @throws \Exception
+     */
+    public function assertValueInRange($expected, $actual, $range = 5)
+    {
+        $lowerBound = $expected - $range;
+        $lowerBound = $lowerBound < 0 ? 0 : $lowerBound;
+        $upperBound = $expected + $range;
+        $condition = $lowerBound <= $actual && $upperBound >= $actual;
+        $this->assert($condition, "Value not in expected range: {$lowerBound} <= {$actual} >= {$upperBound}");
     }
 }
