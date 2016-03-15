@@ -16,3 +16,7 @@ framework.
 ### Waiting for actions
 
 ### Responsive Design
+
+##Authors
+
+- [Samuel Schmidt](https://github.com/dersam)
