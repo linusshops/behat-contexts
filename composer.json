@@ -26,7 +26,6 @@
   ],
   "require": {
     "php": ">=5.3",
-    "ext-json": "*",
     "behat/behat": "~3",
     "behat/mink-selenium2-driver":"~1",
     "behat/mink-extension": "^2.1",
