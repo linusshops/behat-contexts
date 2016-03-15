@@ -9,7 +9,7 @@
  * @since 2016-03-15
  */
 
-namespace LinusShops\Prophet\Context;
+namespace LinusShops\Contexts\Context;
 
 use Behat\Behat\Hook\Scope\AfterStepScope;
 use Behat\Mink\Driver\Selenium2Driver;

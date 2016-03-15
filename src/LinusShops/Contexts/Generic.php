@@ -7,9 +7,7 @@
  * @since 2016-03-15
  */
 
-namespace LinusShops\Prophet\Context;
-
-use Behat\Mink\Exception\ExpectationException;
+namespace LinusShops\Contexts\Context;
 
 trait Generic
 {
