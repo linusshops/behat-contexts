@@ -3,13 +3,9 @@
   "description": "Generic context classes and traits for Behat",
   "type": "utility",
   "keywords": [
-    "magento",
-    "module",
-    "linus shops",
-    "canadas motorcycle",
-    "mx canada",
-    "prophet",
-    "utility"
+    "behat",
+    "testing",
+    "context"
   ],
   "homepage": "https://github.com/linusshops/behat-contexts",
   "license": [
