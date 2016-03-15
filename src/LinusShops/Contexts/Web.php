@@ -82,13 +82,9 @@ class Web extends MinkContext
     public function waitForSelectorExistence($cssSelector, $attempts = 10, $waitInterval = 1)
     {
         $this->waitFor(function ($context) use ($cssSelector) {
-            /** @var MinkContext $context */
+            /** @var Web $context */
             try {
-                $context->assertSession()->elementExists(
-                    'css',
-                    $cssSelector,
-                    $context->getSession()->getPage()
-                );
+                $context->assertElementExists($cssSelector);
             } catch (ElementNotFoundException $e) {
                 return false;
             }
@@ -98,9 +94,11 @@ class Web extends MinkContext
     }
 
     /**
-     * @Given /^selector "([^"]*)" is visible$/
-     * @When /^selector "([^"]*)" is visible$/
-     * @Then /^selector "([^"]*)" is visible$/
+     * Passes when the given css selector is visible on the page.
+     *
+     * @Given /^selector matching "([^"]*)" is visible$/
+     * @When /^selector matching "([^"]*)" is visible$/
+     * @Then /^selector matching "([^"]*)" is visible$/
      */
     public function waitForSelectorVisibility($cssSelector, $attempts = 10, $waitInterval = 1)
     {
@@ -116,6 +114,19 @@ class Web extends MinkContext
         }, $attempts, $waitInterval);
     }
 
+    /**
+     * Passes when at least one element with the given selector is visible on the page.
+     *
+     * Use when there are multiple potential matches, but not all of them may
+     * be visible on the page.
+     *
+     * @Given /^at least one selector matching "([^"]*)" is visible$/
+     * @When /^at least one selector matching "([^"]*)" is visible$/
+     * @Then /^at least one selector matching "([^"]*)" is visible$/
+     *
+     * @param $selectorString
+     * @throws \Exception
+     */
     public function waitForAtLeastOneVisibleElementOfType($selectorString)
     {
         $this->waitFor(function ($context) use ($selectorString) {
@@ -133,31 +144,78 @@ class Web extends MinkContext
         });
     }
 
+    /**
+     * Get the first element that matches the given css selector.
+     *
+     * @param $cssSelector
+     * @return NodeElement|mixed|null
+     */
     public function getElementByCssSelector($cssSelector)
     {
         $element = $this->getSession()
             ->getPage()
             ->find("css", $cssSelector);
 
-        $this->assert($element != null, "{$cssSelector} not found on the page");
-
         return $element;
     }
 
+    /**
+     * Get all elements matching the given css selector.
+     *
+     * @param $cssSelector
+     * @return \Behat\Mink\Element\NodeElement[]
+     */
+    public function getElementsByCssSelector($cssSelector)
+    {
+        $elements = $this->getSession()
+            ->getPage()
+            ->findAll("css", $cssSelector);
+
+        return $elements;
+    }
+
+    /**
+     * Click the first element matching the given css selector.
+     *
+     * @When /^I click the element matching "([^"]*)"$/
+     *
+     * @param $cssSelector
+     * @throws ExpectationException - if no matching elements found
+     */
     public function click($cssSelector)
     {
         $element = $this->getElementByCssSelector($cssSelector);
 
+        $this->assert($element != null, "{$cssSelector} not found on the page");
+
         $element->click();
     }
 
+    /**
+     * Doubleclick the first element matching the given css selector.
+     *
+     * @When /^I doubleclick the element matching "([^"]*)"$/
+     *
+     * @param $cssSelector
+     * @throws ExpectationException - if no matching elements found
+     */
     public function doubleclick($cssSelector)
     {
         $element = $this->getElementByCssSelector($cssSelector);
 
+        $this->assert($element != null, "{$cssSelector} not found on the page");
+
         $element->doubleClick();
     }
 
+    /**
+     * Click the first visible element matching the css selector.
+     *
+     * @When /^I click the first visible element matching "([^"]*)"$/
+     *
+     * @param $selectorString
+     * @throws ExpectationException
+     */
     public function clickFirstVisibleElementOfType($selectorString)
     {
         $page = $this->getSession()->getPage();
@@ -207,6 +265,23 @@ class Web extends MinkContext
     }
 
     /**
+     * Assert that an element matching the given selector exists on the page.
+     *
+     * @param $cssSelector
+     * @throws ElementNotFoundException
+     */
+    public function assertElementExists($cssSelector)
+    {
+        $this->assertSession()->elementExists(
+            'css',
+            $cssSelector,
+            $this->getSession()->getPage()
+        );
+    }
+
+    /**
+     * Assert the given selector is visible on the page.
+     *
      * @param string $cssSelector
      * @throws ExpectationException
      */
