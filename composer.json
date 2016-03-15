@@ -1,0 +1,45 @@
+{
+  "name": "linusshops/behat-contexts",
+  "description": "Generic context classes and traits for Behat",
+  "type": "utility",
+  "keywords": [
+    "magento",
+    "module",
+    "linus shops",
+    "canadas motorcycle",
+    "mx canada",
+    "prophet",
+    "utility"
+  ],
+  "homepage": "https://github.com/linusshops/behat-contexts",
+  "license": [
+    "MIT"
+  ],
+  "authors": [
+    {
+      "name": "Sam Schmidt",
+      "email": "samuel@dersam.net",
+      "homepage": "http://dersam.net",
+      "role": "Web Developer"
+    },
+    {
+      "name": "Linus Shops Inc",
+      "email": "corporate@linusshops.com",
+      "homepage": "http://www.linusshops.com"
+    }
+  ],
+  "require": {
+    "php": ">=5.3",
+    "ext-json": "*",
+    "behat/behat": "~3",
+    "behat/mink-selenium2-driver":"~1",
+    "behat/mink-extension": "^2.1",
+    "behat/mink-goutte-driver": "^1.2",
+    "behat/mink": "^1.7"
+  },
+  "autoload": {
+    "psr-4": {
+      "LinusShops\\Contexts\\":"src/LinusShops/Contexts"
+    }
+  }
+}
