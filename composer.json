@@ -8,9 +8,7 @@
     "context"
   ],
   "homepage": "https://github.com/linusshops/behat-contexts",
-  "license": [
-    "MIT"
-  ],
+  "license": "MIT",
   "authors": [
     {
       "name": "Sam Schmidt",
