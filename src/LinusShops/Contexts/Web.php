@@ -334,4 +334,24 @@ class Web extends MinkContext
             "{$matches[1]} does not match expected {$expectedValue}"
         );
     }
+
+    /**
+     * Call a function on all elements matching the given selector.
+     *
+     * Useful to apply an assertion to every element that matches a given selector.
+     *
+     * @param $cssSelector
+     * @param callable $function
+     * @return array
+     */
+    public function mapElements($cssSelector, callable $function)
+    {
+        $elements = $this->getElementByCssSelector($cssSelector);
+        $result = array();
+        if (!empty($elements)) {
+            $result = $this->map($elements, $function);
+        }
+
+        return $result;
+    }
 }

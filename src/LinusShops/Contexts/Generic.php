@@ -142,4 +142,17 @@ trait Generic
         $condition = $lowerBound <= $actual && $upperBound >= $actual;
         $this->assert($condition, "Value not in expected range: {$lowerBound} <= {$actual} >= {$upperBound}");
     }
+
+    /**
+     * Apply a function to every item in a list, returning the result
+     * of each application.
+     *
+     * @param array $items
+     * @param callable $function
+     * @return array - the result of applying the function on each item
+     */
+    public function map(array $items, callable $function)
+    {
+        return array_map($function, $items);
+    }
 }
