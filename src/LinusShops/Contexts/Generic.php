@@ -7,7 +7,7 @@
  * @since 2016-03-15
  */
 
-namespace LinusShops\Contexts\Context;
+namespace LinusShops\Contexts;
 
 trait Generic
 {
