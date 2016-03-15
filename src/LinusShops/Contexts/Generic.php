@@ -148,11 +148,16 @@ trait Generic
      * of each application.
      *
      * @param array $items
-     * @param callable $function
+     * @param callable $function - a function that takes the current item and returns a result.
      * @return array - the result of applying the function on each item
      */
     public function map(array $items, callable $function)
     {
         return array_map($function, $items);
+    }
+
+    public function reduce(array $items, callable $function)
+    {
+        return array_reduce($items, $function);
     }
 }
