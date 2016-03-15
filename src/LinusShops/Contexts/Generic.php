@@ -9,6 +9,8 @@
 
 namespace LinusShops\Prophet\Context;
 
+use Behat\Mink\Exception\ExpectationException;
+
 trait Generic
 {
     /**
@@ -27,18 +29,46 @@ trait Generic
     {
         for ($i = 0; $i < $attempts; $i++) {
             try {
-                if ($lambda($this)) {
+                if ($lambda($this) === true) {
                     return;
                 }
             } catch (\Exception $e) {
                 //Do nothing and pass on to next iteration
             }
 
-            sleep($waitInterval);
+            $this->wait($waitInterval);
         }
 
         throw new \Exception(
             "Step did not succeed after {$attempts} attempts."
         );
+    }
+
+    /**
+     * Define a step that waits for a specified number of seconds before
+     * continuing. In most cases, it is better to define a waitFor, as this
+     * will check for a specific action to complete, but sometimes it is unavoidable.
+     *
+     * @Given /^I wait "([^"]*)" seconds$/
+     *
+     * @param $seconds
+     */
+    public function wait($seconds)
+    {
+        sleep($seconds);
+    }
+
+    /**
+     * Throw an exception if condition is false.
+     *
+     * @param boolean $condition
+     * @param string $failureMessage
+     * @throws \Exception
+     */
+    public function assert($condition, $failureMessage)
+    {
+        if (!$condition) {
+            throw new \Exception($failureMessage);
+        }
     }
 }
