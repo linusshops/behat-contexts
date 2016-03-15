@@ -71,8 +71,6 @@ class Web extends MinkContext
      * in the DOM.
      *
      * @Given /^selector "([^"]*)" exists$/
-     * @When /^selector "([^"]*)" exists$/
-     * @Then /^selector "([^"]*)" exists$/
      *
      * @param $cssSelector - The css selector to search for on the page.
      * @param int $attempts
@@ -97,8 +95,6 @@ class Web extends MinkContext
      * Passes when the given css selector is visible on the page.
      *
      * @Given /^selector matching "([^"]*)" is visible$/
-     * @When /^selector matching "([^"]*)" is visible$/
-     * @Then /^selector matching "([^"]*)" is visible$/
      */
     public function waitForSelectorVisibility($cssSelector, $attempts = 10, $waitInterval = 1)
     {
@@ -121,8 +117,6 @@ class Web extends MinkContext
      * be visible on the page.
      *
      * @Given /^at least one selector matching "([^"]*)" is visible$/
-     * @When /^at least one selector matching "([^"]*)" is visible$/
-     * @Then /^at least one selector matching "([^"]*)" is visible$/
      *
      * @param $selectorString
      * @throws \Exception
