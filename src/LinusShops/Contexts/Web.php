@@ -16,6 +16,7 @@ use Behat\Mink\Driver\Selenium2Driver;
 use Behat\Mink\Element\NodeElement;
 use Behat\Mink\Exception\ElementNotFoundException;
 use Behat\Mink\Exception\ExpectationException;
+use Behat\Mink\Exception\ResponseTextException;
 use Behat\MinkExtension\Context\MinkContext;
 
 class Web extends MinkContext
@@ -145,6 +146,19 @@ class Web extends MinkContext
                 /** @var Web $context */
                 $context->assertElementContainsText($selector, $text);
             } catch (ExpectationException $e) {
+
+            }
+        });
+    }
+
+    public function waitForVisibleText($text)
+    {
+        $this->waitFor(function ($context) use ($text) {
+            try {
+                /** @var Web $context */
+                $context->assertPageContainsText($text);
+                return true;
+            } catch (ResponseTextException $e) {
 
             }
         });
