@@ -130,7 +130,7 @@ class Web extends MinkContext
     public function waitForAtLeastOneVisibleElementOfType($selectorString)
     {
         $this->waitFor(function ($context) use ($selectorString) {
-            /** @var $context Web */
+            /** @var Web $context */
             $page = $context->getSession()->getPage();
             /** @var NodeElement[] $nodes */
             $nodes = $page->findAll('css', $selectorString);
@@ -141,6 +141,18 @@ class Web extends MinkContext
                 }
             }
             return false;
+        });
+    }
+
+    public function waitForElementText($selector, $text)
+    {
+        $this->waitFor(function ($context) use ($selector, $text) {
+            try {
+                /** @var Web $context */
+                $context->assertElementContainsText($selector, $text);
+            } catch (ExpectationException $e) {
+
+            }
         });
     }
 
@@ -178,6 +190,7 @@ class Web extends MinkContext
      * Click the first element matching the given css selector.
      *
      * @When /^I click the element matching "([^"]*)"$/
+     * @When /^I click on "([^"]*)"$/
      *
      * @param $cssSelector
      * @throws ExpectationException - if no matching elements found
@@ -299,5 +312,26 @@ class Web extends MinkContext
     public function assertIsNotVisible($cssSelector)
     {
         $this->assert(!$this->isVisible($cssSelector), $cssSelector.' is visible on page');
+    }
+
+    /**
+     * @param $parameterName
+     * @param $expectedValue
+     * @throws ExpectationException
+     */
+    public function assertQueryStringParameterValue($parameterName, $expectedValue)
+    {
+        $matches = array();
+        $matched = preg_match(
+            "/{$parameterName}=([^&#]*)/",
+            $this->getSession()->getCurrentUrl(),
+            $matches
+        );
+
+        $this->assert($matched, 'Parameter '.$parameterName.' does not exist in querystring');
+        $this->assert(
+            $matches[1] == $expectedValue,
+            "{$matches[1]} does not match expected {$expectedValue}"
+        );
     }
 }
