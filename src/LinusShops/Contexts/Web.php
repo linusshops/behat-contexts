@@ -151,6 +151,12 @@ class Web extends MinkContext
         });
     }
 
+    /**
+     * @When /^I wait until I see "([^"]*)"$/
+     *
+     * @param $text
+     * @throws \Exception
+     */
     public function waitForVisibleText($text)
     {
         $this->waitFor(function ($context) use ($text) {
