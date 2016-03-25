@@ -107,8 +107,8 @@ trait Generic
     public function assertLessThan($expected, $actual, $msg = null)
     {
         $this->assert(
-            $expected < $actual,
-            $msg == null ? "Expected {$expected} to be less than {$actual}" : $msg
+            $actual < $expected,
+            $msg == null ? "Expected {$actual} to be less than {$expected}" : $msg
         );
     }
 
@@ -121,8 +121,8 @@ trait Generic
     public function assertGreaterThan($expected, $actual, $msg = null)
     {
         $this->assert(
-            $expected > $actual,
-            $msg == null ? "Expected {$expected} to be greater than {$actual}" : $msg
+            $actual > $expected,
+            $msg == null ? "Expected {$actual} to be greater than {$expected}" : $msg
         );
     }
 
