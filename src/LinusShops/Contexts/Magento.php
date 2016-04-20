@@ -6,7 +6,7 @@
  * @since 2016-03-15
  */
 
-namespace LinusShops\Prophet\Context;
+namespace LinusShops\Contexts;
 
 trait Magento
 {
