@@ -236,6 +236,28 @@ class Web extends MinkContext
     }
 
     /**
+     * Select the first option in a dropdown, whatever it may be.
+     *
+     * @param $dropdownSelectorString - the target select dropdown
+     */
+    public function selectOptionInDropdownByPosition($dropdownSelectorString, $position)
+    {
+        $select = $this->getElementByCssSelector($dropdownSelectorString);
+        $firstOption = $this->getElementByCssSelector($dropdownSelectorString." option:nth-of-type({$position})");
+        $select->selectOption($firstOption->getAttribute('value'));
+    }
+
+    /**
+     * @param $dropdownSelectorString
+     * @param $value
+     */
+    public function selectOptionInDropdownByValue($dropdownSelectorString, $value)
+    {
+        $select = $this->getElementByCssSelector($dropdownSelectorString);
+        $select->selectOption($value);
+    }
+    
+    /**
      * Click the first visible element matching the css selector.
      *
      * @When /^I click the first visible element matching "([^"]*)"$/
