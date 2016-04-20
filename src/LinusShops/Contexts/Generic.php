@@ -141,6 +141,11 @@ trait Generic
         $this->assert($condition, "Value not in expected range: {$lowerBound} <= {$actual} >= {$upperBound}");
     }
 
+    public function assertRegex($expected, $actual)
+    {
+        $this->assert(preg_match($expected, $actual), "{$actual} did not match expected {$expected}");
+    }
+
     /**
      * Apply a function to every item in a list, returning the result
      * of each application.
