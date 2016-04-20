@@ -277,6 +277,12 @@ class Web extends MinkContext
         return $pageElement == null ? false : $pageElement->isVisible();
     }
 
+    public function isDisabled($cssSelector)
+    {
+        $element = $this->getElementByCssSelector($cssSelector);
+        return $element->getAttribute('disabled') != null;
+    }
+
     /**
      * Throw an exception if condition is false.
      *

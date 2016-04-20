@@ -26,6 +26,8 @@ trait Magento
             $hash .= "{$key}={$value}";
         }
 
+        $hash = $hash == '#' ? '' : $hash;
+
         $this->visit($url.$hash);
 
         $this->waitForVisibleText($product->getName());
