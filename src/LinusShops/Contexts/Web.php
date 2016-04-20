@@ -18,6 +18,7 @@ use Behat\Mink\Exception\ElementNotFoundException;
 use Behat\Mink\Exception\ExpectationException;
 use Behat\Mink\Exception\ResponseTextException;
 use Behat\MinkExtension\Context\MinkContext;
+use Exception;
 
 class Web extends MinkContext
 {
@@ -256,6 +257,34 @@ class Web extends MinkContext
         $select = $this->getElementByCssSelector($dropdownSelectorString);
         $select->selectOption($value);
     }
+
+    public function getSelectedOption($selectElement)
+    {
+        $options = $selectElement->findAll('css', 'option');
+        foreach ($options as $option) {
+            if ($option->isSelected()) {
+                return $option;
+            }
+        }
+
+        throw new Exception('No option selected');
+    }
+
+    /**
+     * @param $selectorString
+     * @return string
+     * @throws Exception
+     */
+    public function getHtmlContent($selectorString)
+    {
+        $element = $this->getElementByCssSelector($selectorString);
+
+        if ($element == null) {
+            throw new Exception("Selector '{$selectorString}' does not yield a valid element");
+        }
+
+        return $element->getHtml();
+    }
     
     /**
      * Click the first visible element matching the css selector.
@@ -375,6 +404,17 @@ class Web extends MinkContext
             $matches[1] == $expectedValue,
             "{$matches[1]} does not match expected {$expectedValue}"
         );
+    }
+
+    /**
+     * Given a selector, verifies that its content matches the expected.
+     *
+     * @param $selectorString
+     * @param $expected
+     */
+    public function assertHtmlContentMatches($selectorString, $expected)
+    {
+        $this->assertEqual(trim($this->getHtmlContent($selectorString)), $expected);
     }
 
     /**
